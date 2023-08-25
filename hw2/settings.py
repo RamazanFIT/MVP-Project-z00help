@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -136,3 +136,8 @@ INTERNAL_IPS = [
 LOGIN_REDIRECT_URL = "/news/main_page"
 
 LOGOUT_REDIRECT_URL = "/login/"
+
+AUTH_USER_MODEL = 'news.CustomUser'
+
+MEDIA_URL = 'news/static/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'news/static/')

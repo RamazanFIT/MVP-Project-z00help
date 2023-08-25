@@ -12,11 +12,13 @@
 {% block content %} 
     <div class="container" style="background-image: url('{% static "news/images/c.jpg" %}');">
         <a class="back-button" href="{% url 'news:main' %}">Back</a>
-        <form class="add-news-form" action="{% url 'news:interface_adding' %}" method="post">
+        <form class="add-news-form" action="{% url 'news:interface_adding' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <h1 class="add-news-heading">Add News</h1>
             {{ news_add_form.as_p }}
-            
+            Добавить Изображения:
+            <input type="file" name="images" multiple>
+
             <button class="add-button" type="submit">Add News</button>
         </form>
     </div>

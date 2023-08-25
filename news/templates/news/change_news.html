@@ -11,8 +11,8 @@ Change News
 
 {% block content %} 
     <div class="container" style="background-image: url('{% static "news/images/d.jpg" %}');">
-        <a class="back-button" href="{% url 'news:all_news' %}">Back</a>
-        <form class="change-news-form" action="{% url 'news:change_data_of_news' news_id %}" method="post">
+        <a class="back-button" href="{% url 'news:info_news' news_id %}">Back</a>
+        <form class="change-news-form" action="{% url 'news:change_data_of_news' news_id %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <h1 class="change-news-heading">Change News</h1>
             {{ news_change_form.as_p }}

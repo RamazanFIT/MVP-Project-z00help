@@ -1,0 +1,52 @@
+{% extends "news/base.html" %}
+
+{% block title %} 
+    Direct
+{% endblock %}
+
+{% block header %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'news/css/style_info.css' %}">
+{% endblock %}
+
+{% block content %} 
+    <div class="container">
+        <a href="{% url 'news:main' %}" class="back-link">← Back </a>
+        <br>
+        
+        {% if user.is_authenticated %}
+            
+
+                <h2 class="info-subheading">History of message:</h2>
+            <ul class="comments-list">
+                {% for message in messages %}
+                <li class="comment-item">
+                    <div class="comment-content">
+                        <p class="message">{{ message.content }}</p>
+                        {% if  message.sender == user %}
+                            <p class="comment-meta">Created at: {{ message.created_at }} • Author: {{ message.sender }}</p> 
+                            Отправил ты
+                        {% else %}
+                            <p class="comment-meta">Created at: {{ message.created_at }} • Author: {{ message.receiver }}</p>
+                            Отправил он
+                        {% endif %}
+                       
+                        {% if message.sender == user or perms.news.delete_comment %}
+                            <a href="{% url 'news:delete_message' message.sender.id message.receiver.id message.id %}" class="delete-comment-link">Delete</a>
+                        {% endif %}
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+            <form action="{% url 'news:direct' user.id receiver_id %}" method="post" class="comment-form">
+                {% csrf_token %}
+                <input type="text" name="content" placeholder="Send a message..." class="comment-input" required>
+                <button type="submit" class="comment-button">Send</button>
+            </form>
+        {% else %}
+            <p class="comment-message">Direct: (Available for authenticated users)</p>
+        {% endif %}
+
+        
+    </div>
+{% endblock %}

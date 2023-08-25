@@ -6,7 +6,7 @@
 
 {% block header %}
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'news/css/style_info_news.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'news/css/style_info_news1.css' %}">
 {% endblock %}
 
 {% block content %} 
@@ -19,6 +19,10 @@
                 <li class="info-item"><strong class="info-label">Surname:</strong> {{ user.last_name }}</li>
                 <li class="info-item"><strong class="info-label">Login:</strong> {{ user }}</li>
                 <li class="info-item"><strong class="info-label">Email:</strong> {{ user.email }}</li>
+                <li class="info-item"><strong class="info-label">Phone:</strong> {{ user.phone }}</li>
+                <li class="info-item">
+                    <img src="{% static user.image.name %}" alt="image_of_user" class="user-image">
+                </li>
             </ul>
         </div>
     </div>

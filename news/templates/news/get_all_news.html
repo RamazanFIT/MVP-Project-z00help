@@ -1,7 +1,7 @@
 {% extends "news/base.html" %}
 
 {% block title %} 
-    NEWS
+    Animals
 {% endblock %}
 
 {% block header %}
@@ -11,14 +11,19 @@
 
 {% block content %} 
     <div class="container">
+        <li><a href="{% url 'news:interface_adding' %}" class="nav-link">Add News</a></li>
         <a href="{% url 'news:main' %}" class="back-link">← Back</a>
-        <h1 class="news-list-heading">Список всех новостей:</h1>
+        <h1 class="news-list-heading">Список всех животных, которые можно приютить ;)</h1>
         <ul class="news-list">
+            
             {% for new in news %}
             <li class="news-item">
+                <li class="info-item">
+                    <img src="{% static new.main_image.name %}" alt="image_of_post" class="user-image">
+                </li>
                 <div class="news-content">
                     <a href="{% url 'news:info_news' new.id %}" class="news-link">
-                        {{ new.title }} by {{ new.author_of_news }}
+                        {{ new.title }} by {{ new.author_of_news }} Likes:{{new.likes}}, Откликнулись: {{new.otclick}}, Тип: {{new.type}}
                     </a>
                     {% if new.author_of_news == user or perms.news.delete_news %}
                         <a href="{% url 'news:delete_news' new.id new.author_of_news.pk %}" class="delete-link">Delete</a>

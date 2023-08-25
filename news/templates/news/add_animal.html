@@ -1,0 +1,25 @@
+{% extends "news/base.html" %}
+
+{% block title %} 
+    Add Animal
+{% endblock %}
+
+{% block header %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'news/css/style_for_add_news.css' %}">
+{% endblock %}
+
+{% block content %} 
+    <div class="container" style="background-image: url('{% static "news/images/c.jpg" %}');">
+        <a class="back-button" href="{% url 'news:main' %}">Back</a>
+        <form class="add-news-form" action="{% url 'news:add_animal' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h1 class="add-news-heading">Add Animal</h1>
+            {{ animal_add_form.as_p }}
+            Добавить Изображения:
+            <input type="file" name="images" multiple>
+
+            <button class="add-button" type="submit">Add Animal</button>
+        </form>
+    </div>
+{% endblock %}

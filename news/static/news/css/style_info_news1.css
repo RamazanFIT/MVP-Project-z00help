@@ -53,3 +53,10 @@ body {
     margin-right: 10px;
 }
 
+.user-image {
+    width: 100px; /* Adjust the width as needed */
+    height: 100px; /* Adjust the height as needed */
+    border-radius: 50%; /* Make the image circular */
+    border: 2px solid #ccc; /* Add a subtle border */
+    margin-top: 10px; /* Add some space below the list */
+}

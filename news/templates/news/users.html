@@ -1,0 +1,35 @@
+{% extends "news/base.html" %}
+
+{% block title %} 
+    Users
+{% endblock %}
+
+{% block header %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'news/css/styl.css' %}">
+{% endblock %}
+
+{% block content %} 
+    <div class="container">
+        <a href="{% url 'news:main' %}" class="back-link">← Back</a>
+        <h1 class="news-list-heading">Список всех пользователей:</h1>
+        <ul class="news-list">
+            
+            {% for user in users %}
+            <li class="news-item">
+                <li class="info-item">
+                    <img src="{% static user.image.name %}" alt="image_of_user" class="user-image">
+                </li>
+                <div class="news-content">
+                    <a href="{% url 'news:animals_of_user' user.id %}" class="news-link">
+                        {{user}}
+                    </a>
+                    {% comment %} {% if new.author_of_news == user or perms.news.delete_news %}
+                        <a href="{% url 'news:delete_news' new.id new.author_of_news.pk %}" class="delete-link">Delete</a>
+                    {% endif %} {% endcomment %}
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

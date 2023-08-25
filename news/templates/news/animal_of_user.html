@@ -1,0 +1,40 @@
+{% extends "news/base.html" %}
+
+{% block title %} 
+    Animals of User
+{% endblock %}
+
+{% block header %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'news/css/styl.css' %}">
+{% endblock %}
+
+{% block content %} 
+    <div class="container">
+        <a href="{% url 'news:main' %}" class="back-link">← Back</a>
+        {% if user_id == user.id %}
+
+            <a href="{% url 'news:add_animal' %}" class="back-link">Добавить питомца</a>
+        
+        {% endif %}
+        <h1 class="news-list-heading">Список всех животных пользователя:</h1>
+        <ul class="news-list">
+            
+            {% for animal in animals %}
+            <li class="news-item">
+                <li class="info-item">
+                    <img src="{% static animal.image.name %}" alt="image_of_animal" class="user-image">
+                </li>
+                <div class="news-content">
+                    <a href="{% url 'news:get_info_about_animal' animal.id %}" class="news-link">
+                        {{animal.title}} Likes:{{animal.likes}} owner:{{animal.owner}}
+                    </a>
+                    {% comment %} {% if new.author_of_news == user or perms.news.delete_news %}
+                        <a href="{% url 'news:delete_news' new.id new.author_of_news.pk %}" class="delete-link">Delete</a>
+                    {% endif %} {% endcomment %}
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

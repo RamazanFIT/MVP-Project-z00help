@@ -12,7 +12,7 @@
 {% endblock %}
 
 {% block head %}
-    <h1 class="info-heading">Information about News</h1>
+    <h1 class="info-heading">ZooCentre to help pets and animals</h1>
 {% endblock %}
 
 {% block content %} 
@@ -20,9 +20,12 @@
         <ul class="nav-links">
             {% if user.is_authenticated %}
                 <li><a href="{% url 'news:profile' %}" class="nav-link">Profile</a></li>
+                <li><a href="{% url 'news:animals_of_user' user.id %}" class="nav-link">Мои питомцы</a></li>
                 <li class="user-welcome">Welcome, {{ user.first_name }} {{ user.last_name }}</li>
-                <li><a href="{% url 'news:interface_adding' %}" class="nav-link">Add News</a></li>
-                <li><a href="{% url 'news:all_news' %}" class="nav-link">News</a></li>
+                <li><a href="{% url 'news:own_direct' %}" class="nav-link">Входящие сообщения</a></li>
+                <li><a href="{% url 'news:send_direct' %}" class="nav-link">Отправленные сообщения</a></li>
+                <li><a href="{% url 'news:list_of_user' %}" class="nav-link">Помощь хозяевам</a></li>
+                <li><a href="{% url 'news:all_news' %}" class="nav-link">Подобрать питомца</a></li>
                 <li><a href="{% url 'news:logout' %}" class="nav-link">Logout</a></li>
             {% else %}
                 <li><a href="/login/" class="nav-link">Login</a></li>

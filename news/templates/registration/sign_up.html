@@ -15,8 +15,13 @@
 {% endblock %}
 
 {% block content %} 
-        
-    <form action="{% url 'news:sign_up' %}" method="post">
+    <ul>
+        {% for error in form.errors %}
+            <li>{{ error }}</li>
+        {% endfor %}
+    </ul>
+    
+    <form action="{% url 'news:sign_up' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
 
         <p>{{ form.username.label_tag }}</p>
@@ -30,12 +35,18 @@
 
         <p>{{ form.last_name.label_tag }}</p>
         <p>{{ form.last_name }}</p>
+        
+        <p>{{ form.phone.label_tag }}</p>
+        <p>{{ form.phone }}</p>
 
         <p>{{ form.password1.label_tag }}</p>
         <p>{{ form.password1 }}</p>
 
         <p>{{ form.password2.label_tag }}</p>
         <p>{{ form.password2 }}</p>
+
+        <p>{{ form.image.label_tag }}</p>
+        <p>{{ form.image }}</p>
 
         <p><input type="submit" value="Создат аккаунт"></p>
 

@@ -1,16 +1,17 @@
 [tool.poetry]
-name = "django-2-ramazanfit"
+name = "MVP_project"
 version = "0.1.0"
 description = ""
 authors = ["Ramazan <syrlybai056@gmail.com>"]
 readme = "README.md"
-packages = [{include = "django_2_ramazanfit"}]
+
 
 [tool.poetry.dependencies]
 python = "^3.11"
 django = "^4.2.4"
 django-debug-toolbar = "^4.2.0"
 djangorestframework = "^3.14.0"
+pillow = "^10.0.0"
 
 
 [build-system]
