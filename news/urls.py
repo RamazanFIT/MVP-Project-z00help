@@ -31,5 +31,6 @@ urlpatterns = [
     path("profile/change_password/", views.ChangePasswordOfUser.as_view(), name="password_change"),
     path("animal/update/<int:animal_id>/", views.AnimalUpdateView.as_view(), name="animal_update"),
     path("likes_if_take_animal_comment/<int:comment_id>/<int:author_id>/", views.likes_if_take_animal_comment, name="likes_if_take_animal_comment"),
+    path("likes_animal_comment/<int:comment_id>/<int:author_id>/", views.likes_animal_comment, name="likes_animal_comment"),
     
 ]

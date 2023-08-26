@@ -8,7 +8,7 @@ from .models import (News, Comment, CustomUser,
                     OtclickOfPost, Message, 
                     AnimalImage, OwnAnimal, 
                     CommentForOwnAnimal,LikesOfAnimal,
-                    LikesOfTakeAnimalComment)
+                    LikesOfTakeAnimalComment, LikesOfAnimalComment)
 from .forms import NewsAddModelForm, SignUpForm, NewsChangeModelForm, AnimalAddForm, ProfileChangeModelForm, ChangePasswordForm, AnimalChangeModelForm
 from django.views import View
 from django.utils.decorators import method_decorator
@@ -306,6 +306,30 @@ def get_info_about_animal(request, animal_id : int):
         comment.save()
         return redirect(reverse("news:get_info_about_animal", kwargs={"animal_id" : animal_id}))
 
+@login_required(login_url="/login/")
+def likes_animal_comment(request, comment_id : int, author_id : int):
+   
+    if request.method == "POST":
+        comment = CommentForOwnAnimal.objects.get(pk=comment_id)
+        user = CustomUser.objects.get(pk=author_id)
+        like, created = LikesOfAnimalComment.objects.get_or_create(author=user, comment=comment)
+        if  created:
+            comment.likes += 1
+            like.bolean = True
+            comment.save()
+            like.save()
+        elif like.bolean:
+            comment.likes -= 1
+            like.bolean = False
+            comment.save()
+            like.save()
+        else:
+            comment.likes += 1
+            like.bolean = True
+            comment.save()
+            like.save()
+    return redirect(reverse("news:get_info_about_animal", kwargs={"animal_id" : comment.animal.id}))
+
 def comment_delete_for_animal(request, comment_id : int, animal_id : int):
     comment = get_object_or_404(CommentForOwnAnimal, pk=comment_id)
     animal = get_object_or_404(OwnAnimal, pk=animal_id)
@@ -313,6 +337,7 @@ def comment_delete_for_animal(request, comment_id : int, animal_id : int):
         comment.delete()
     return redirect(reverse("news:get_info_about_animal", kwargs={"animal_id" : animal_id}))
 
+@login_required(login_url="/login/")
 def likes_animal(request, animal_id : int, author_id : int):
    
     if request.method == "POST":

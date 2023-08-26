@@ -82,7 +82,11 @@
             <li class="comment-item">
                 <div class="comment-content">
                     <p class="comment-text">{{ comment.content }}</p>
-                    <p class="comment-meta">Created at: {{ comment.created_at }} • Author: {{ comment.author_of_comment }}</p>
+                    <p class="comment-meta">Created at: {{ comment.created_at }} • Author: {{ comment.author_of_comment }} • Likes: {{ comment.likes }}</p>
+                    <form action="{% url 'news:likes_animal_comment' comment.id user.id %}" method="post" class="comment-form">
+                        {% csrf_token %}
+                        <button type="submit" class="comment-button">Like</button>
+                    </form>
                     {% if comment.author_of_comment == user or perms.news.delete_comment or animal.owner == user %}
                         <a href="{% url 'news:comment_delete_for_animal' comment.id animal.id %}" class="delete-comment-link">Delete</a>
                     {% endif %}

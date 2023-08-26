@@ -102,11 +102,16 @@ class CommentForOwnAnimal(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     animal = models.ForeignKey(OwnAnimal, on_delete=models.CASCADE)
     author_of_comment = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    
+    likes = models.IntegerField(default=0)
     def __str__(self):
         return self.content
 
 class LikesOfAnimal(models.Model):
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     animal = models.ForeignKey(OwnAnimal, on_delete=models.CASCADE)
+    bolean = models.BooleanField(null=True)
+
+class LikesOfAnimalComment(models.Model):
+    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    comment = models.ForeignKey(CommentForOwnAnimal, on_delete=models.CASCADE)
     bolean = models.BooleanField(null=True)
