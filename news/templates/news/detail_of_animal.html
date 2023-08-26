@@ -12,9 +12,9 @@
 {% block content %} 
     <div class="container">
         <a href="{% url 'news:animals_of_user' animal.owner.id %}" class="back-link">← Back</a>
-        <br>
+        
         {% if animal.owner == user or perms.news.change_news %}
-            <a href="{% url 'news:animal_update' animal.id %}" class="change-news-link">Edit Animal</a>
+            <a href="{% url 'news:animal_update' animal.id %}" class="back-link">Edit Animal</a>
         {% endif %}
         <h1 class="info-heading">Information about Animal</h1>
         <div class="info-content">

@@ -25,10 +25,10 @@
                         <p class="message">{{ message.content }}</p>
                         {% if  message.sender == user %}
                             <p class="comment-meta">Created at: {{ message.created_at }} • Author: {{ message.sender }}</p> 
-                            Отправил ты
+                            You
                         {% else %}
                             <p class="comment-meta">Created at: {{ message.created_at }} • Author: {{ message.receiver }}</p>
-                            Отправил он
+                            She|He
                         {% endif %}
                        
                         {% if message.sender == user or perms.news.delete_comment %}

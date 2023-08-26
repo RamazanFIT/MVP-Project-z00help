@@ -12,9 +12,9 @@
 {% block content %} 
     <div class="container">
         <a href="{% url 'news:all_news' %}" class="back-link">← Back</a>
-        <br>
+        
         {% if news.author_of_news == user or perms.news.change_news %}
-            <a href="{% url 'news:change_data_of_news' news.id %}" class="change-news-link">Edit News</a>
+            <a href="{% url 'news:change_data_of_news' news.id %}" class="back-link">Edit News</a>
         {% endif %}
         <h1 class="info-heading">Information about News</h1>
         <div class="info-content">
@@ -61,6 +61,7 @@
             <div class="info-section">
                 <h2 class="info-subheading">Mobile Phone</h2>
                 <p class="info-text">{{ news.mobile_phone }}</p>
+                <p class="info-text">{{ news.author_of_news.phone }}</p>
             </div>
     
             <div class="info-section">

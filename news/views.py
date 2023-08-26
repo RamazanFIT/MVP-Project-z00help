@@ -273,7 +273,7 @@ def animals_of_user(request, user_id : int):
 
 
 @login_required(login_url="/login/")
-def add_animal(request):
+def add_animal(request, user_id : int):
     if request.method == "POST":
         form = AnimalAddForm(request.POST, request.FILES)
         if form.is_valid():
@@ -291,7 +291,7 @@ def add_animal(request):
             return redirect(reverse("news:add_animal"))
     elif request.method == "GET":
         animal_add_form = AnimalAddForm()
-        return render(request, "news/add_animal.html", {"animal_add_form" : animal_add_form})
+        return render(request, "news/add_animal.html", {"animal_add_form" : animal_add_form, "user_id" : user_id})
 
 def get_info_about_animal(request, animal_id : int):
     if request.method == "GET":

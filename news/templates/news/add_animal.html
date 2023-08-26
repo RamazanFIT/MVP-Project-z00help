@@ -11,8 +11,8 @@
 
 {% block content %} 
     <div class="container" style="background-image: url('{% static "news/images/c.jpg" %}');">
-        <a class="back-button" href="{% url 'news:main' %}">Back</a>
-        <form class="add-news-form" action="{% url 'news:add_animal' %}" method="post" enctype="multipart/form-data">
+        <a class="back-button" href="{% url 'news:animals_of_user' user_id %}">Back</a>
+        <form class="add-news-form" action="{% url 'news:add_animal' user_id %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <h1 class="add-news-heading">Add Animal</h1>
             {{ animal_add_form.as_p }}

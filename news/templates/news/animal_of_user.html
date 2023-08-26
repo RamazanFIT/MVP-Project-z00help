@@ -14,7 +14,7 @@
         <a href="{% url 'news:main' %}" class="back-link">← Back</a>
         {% if user_id == user.id %}
 
-            <a href="{% url 'news:add_animal' %}" class="back-link">Добавить питомца</a>
+            <a href="{% url 'news:add_animal' user_id %}" class="back-link">Добавить питомца</a>
         
         {% endif %}
         <h1 class="news-list-heading">Список всех животных пользователя:</h1>
