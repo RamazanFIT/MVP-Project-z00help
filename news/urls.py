@@ -32,5 +32,7 @@ urlpatterns = [
     path("animal/update/<int:animal_id>/", views.AnimalUpdateView.as_view(), name="animal_update"),
     path("likes_if_take_animal_comment/<int:comment_id>/<int:author_id>/", views.likes_if_take_animal_comment, name="likes_if_take_animal_comment"),
     path("likes_animal_comment/<int:comment_id>/<int:author_id>/", views.likes_animal_comment, name="likes_animal_comment"),
+    path("delete_animal_of_user/<int:animal_id>/", views.delete_animal_of_user, name="delete_animal_of_user"),
+    path("delete_dialog/<int:sender_id>/<int:receiver_id>/", views.delete_dialog, name="delete_dialog"),
     
 ]

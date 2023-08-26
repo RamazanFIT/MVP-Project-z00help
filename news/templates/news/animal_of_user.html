@@ -29,9 +29,9 @@
                     <a href="{% url 'news:get_info_about_animal' animal.id %}" class="news-link">
                         {{animal.title}} Likes:{{animal.likes}} owner:{{animal.owner}}
                     </a>
-                    {% comment %} {% if new.author_of_news == user or perms.news.delete_news %}
-                        <a href="{% url 'news:delete_news' new.id new.author_of_news.pk %}" class="delete-link">Delete</a>
-                    {% endif %} {% endcomment %}
+                    {% if animal.owner == user or perms.news.delete_comment %}
+                        <a href="{% url 'news:delete_animal_of_user' animal.id %}" class="delete-link">Delete</a>
+                    {% endif %}
                 </div>
             </li>
             {% endfor %}

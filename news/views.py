@@ -9,7 +9,10 @@ from .models import (News, Comment, CustomUser,
                     AnimalImage, OwnAnimal, 
                     CommentForOwnAnimal,LikesOfAnimal,
                     LikesOfTakeAnimalComment, LikesOfAnimalComment)
-from .forms import NewsAddModelForm, SignUpForm, NewsChangeModelForm, AnimalAddForm, ProfileChangeModelForm, ChangePasswordForm, AnimalChangeModelForm
+from .forms import (NewsAddModelForm, SignUpForm, 
+                    NewsChangeModelForm, AnimalAddForm, 
+                    ProfileChangeModelForm, ChangePasswordForm, 
+                    AnimalChangeModelForm)
 from django.views import View
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required, permission_required
@@ -279,7 +282,6 @@ def add_animal(request):
             animal.owner = user
             animal.save()
             images = request.FILES.getlist("images")
-            print(images)
             
             for image in images:
                 AnimalImage.objects.create(animal=animal, image=image)
@@ -428,3 +430,26 @@ class AnimalUpdateView(View):
             return render(request, 'news/animal_data_change.html', {'form':form, "animal_id" : animal_id})
         else:
             return HttpResponseRedirect("/error", {"message" : "Error"})
+
+def delete_animal_of_user(request, animal_id : int):
+    animal = OwnAnimal.objects.get(pk=animal_id)
+    owner_id = int(animal.owner.id)
+    if animal.owner == request.user or request.user.has_perm("news.delete_news"):
+        animal.delete()
+    return redirect(reverse("news:animals_of_user", args=(owner_id, )))
+
+@login_required(login_url="/login/")
+def delete_dialog(request, sender_id : int, receiver_id : int):
+    sender = CustomUser.objects.get(pk=sender_id)
+    receiver = CustomUser.objects.get(pk=receiver_id)
+    if request.user == sender or request.user == receiver:
+        sender_message = Message.objects.filter(sender=sender, receiver=receiver).all()
+        receiver_message = Message.objects.filter(sender=receiver, receiver=sender).all()
+        sender_message.delete()
+        receiver_message.delete()
+        if sender_id == request.user.id:
+            return redirect(reverse("news:own_direct"))
+        else:
+            return redirect(reverse("news:send_direct"))            
+    return HttpResponseRedirect("/error", {"message" : "Error"})
+
