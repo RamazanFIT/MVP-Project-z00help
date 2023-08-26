@@ -1,5 +1,5 @@
 from django import forms
-from django.forms import ModelForm
+from django.forms import ModelForm, Form
 from .models import News,CustomUser, OwnAnimal
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -44,3 +44,22 @@ class AnimalAddForm(ModelForm):
             "content",
             "image"
         ]
+
+class ProfileChangeModelForm(ModelForm):
+    class Meta():
+        model = CustomUser
+        fields = ["first_name", "last_name", "email", "image", "phone"] 
+
+class ChangePasswordForm(Form):
+    
+    current_password = forms.CharField(widget=forms.PasswordInput())
+    password1 = forms.CharField(widget=forms.PasswordInput())
+    password2 = forms.CharField(widget=forms.PasswordInput())
+
+
+class AnimalChangeModelForm(ModelForm):
+    class Meta():
+        model = OwnAnimal
+        fields = ["image", "title", "content", "type"] 
+
+   

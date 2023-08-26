@@ -8,7 +8,7 @@ from .models import (News, Comment, CustomUser,
                     OtclickOfPost, Message, 
                     AnimalImage, OwnAnimal, 
                     CommentForOwnAnimal,LikesOfAnimal)
-from .forms import NewsAddModelForm, SignUpForm, NewsChangeModelForm, AnimalAddForm
+from .forms import NewsAddModelForm, SignUpForm, NewsChangeModelForm, AnimalAddForm, ProfileChangeModelForm, ChangePasswordForm, AnimalChangeModelForm
 from django.views import View
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required, permission_required
@@ -20,6 +20,7 @@ from rest_framework import generics
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.db.models import Q
+from django.contrib.auth.hashers import check_password
 
 def get_info_about_new(request, news_id : int):
     if request.method == "GET":
@@ -85,7 +86,7 @@ class NewsUpdateView(View):
             if form.is_valid():
                 form.save()
                 return redirect(reverse("news:info_news", kwargs={"news_id":news_id}))   
-            return redirect(reverse("news:change_data_of_news", kwargs={"form" : form, "news_id":news_id}))     
+            return render(request, 'news/change_news.html', {'news_change_form':form, "news_id" : news_id})  
         else:
             return HttpResponseRedirect("/error", {"message" : "Error"})
 
@@ -310,3 +311,71 @@ def likes_animal(request, animal_id : int, author_id : int):
             animal.save()
             like.save()
     return redirect(reverse("news:get_info_about_animal", kwargs={"animal_id" : animal_id}))
+
+# add_permissions
+class EditProfile(View):
+    def get(self, request):
+        user = get_object_or_404(CustomUser, pk=request.user.id)
+        if  request.user.has_perm("news.change_news") or user: 
+            form = ProfileChangeModelForm(instance=user)
+            return render(request, 'news/user_data_change_form.html', {'form':form})
+        return HttpResponse("Permission denied")
+
+    def post(self, request):
+        user = get_object_or_404(CustomUser, pk=request.user.id)
+        if user or request.user.has_perm("news.change_news"):
+            form = ProfileChangeModelForm(request.POST, request.FILES, instance=user)
+            if form.is_valid():
+                form.save()
+                return redirect(reverse("news:profile"))   
+            return redirect(reverse("news:change_data_of_news", kwargs={"form" : form}))     
+        else:
+            return HttpResponseRedirect("/error", {"message" : "Error"})
+
+class ChangePasswordOfUser(View):
+    def get(self, request):
+        user = get_object_or_404(CustomUser, pk=request.user.id)
+        if  request.user.has_perm("news.change_news") or user: 
+            form = ChangePasswordForm()
+            return render(request, 'news/password_change_form.html', {'form':form})
+        return HttpResponse("Permission denied")
+
+    def post(self, request):
+        user = get_object_or_404(CustomUser, pk=request.user.id)
+        if user or request.user.has_perm("news.change_news"):
+            form = ChangePasswordForm(request.POST)
+            if form.is_valid():
+                if check_password(form.cleaned_data.get("current_password"), user.password):
+                    if form.cleaned_data.get("password1") == form.cleaned_data.get("password2"):
+                        user.set_password(form.cleaned_data.get("password1"))
+                        user.save()
+                        login(request, user)
+                        return redirect(reverse("news:profile")) 
+                    else:
+                        form.add_error("password1", "Пароли не совпадают друг с другом")
+                        return render(request, 'news/password_change_form.html', {'form':form})
+                else:
+                    form.add_error("current_password", "Старый пароль пользователя введен некорректно")
+                    return render(request, 'news/password_change_form.html', {'form':form})
+            return render(request, 'news/password_change_form.html', {'form':form})
+        else:
+            return HttpResponseRedirect("/error", {"message" : "Error"})
+
+class AnimalUpdateView(View):
+    def get(self, request, animal_id : int):
+        animal = OwnAnimal.objects.get(pk=animal_id)
+        if request.user == animal.owner or request.user.has_perm("news.change_news"): 
+            form = AnimalChangeModelForm(instance=animal)
+            return render(request, 'news/animal_data_change.html', {'form':form, "animal_id" : animal_id})
+        return HttpResponse("Permission denied")
+
+    def post(self, request, animal_id : int):
+        animal = OwnAnimal.objects.get(pk=animal_id)
+        if request.user == animal.owner or request.user.has_perm("news.change_news"):
+            form = AnimalChangeModelForm(request.POST, request.FILES, instance=animal)
+            if form.is_valid():
+                form.save()
+                return redirect(reverse("news:get_info_about_animal", kwargs={"animal_id":animal_id}))    
+            return render(request, 'news/animal_data_change.html', {'form':form, "animal_id" : animal_id})
+        else:
+            return HttpResponseRedirect("/error", {"message" : "Error"})

@@ -26,6 +26,9 @@ urlpatterns = [
     path("add_animal/", views.add_animal, name="add_animal"),
     path('get_info_about_animal/<int:animal_id>/', views.get_info_about_animal, name="get_info_about_animal"),
     path("comment_delete_for_animal/<int:comment_id>/<int:animal_id>/", views.comment_delete_for_animal, name="comment_delete_for_animal"),
-    path("likes_animal/<int:animal_id>/<int:author_id>/", views.likes_animal, name="likes_animal")
+    path("likes_animal/<int:animal_id>/<int:author_id>/", views.likes_animal, name="likes_animal"),
+    path("profile/edit/", views.EditProfile.as_view(), name="profile_edit"),
+    path("profile/change_password/", views.ChangePasswordOfUser.as_view(), name="password_change"),
+    path("animal/update/<int:animal_id>/", views.AnimalUpdateView.as_view(), name="animal_update")
     
 ]

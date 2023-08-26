@@ -1,0 +1,28 @@
+{% extends "news/base.html" %}
+
+{% block title %} 
+Edit User data
+{% endblock %}
+
+{% block header %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'news/css/style_for_change.css' %}">
+{% endblock %}
+
+{% block content %} 
+    <div class="container" style="background-image: url('{% static "news/images/d.jpg" %}');">
+        <ul>
+            {% for error in form.errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+        <a class="back-button" href="{% url 'news:profile' %}">Back</a>
+        <form class="change-news-form" action="{% url 'news:profile_edit' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h1 class="change-news-heading">Edit:</h1>
+            {{ form.as_p }}
+            
+            <button class="change-button" type="submit">Edit</button>
+        </form>
+    </div>
+{% endblock %}

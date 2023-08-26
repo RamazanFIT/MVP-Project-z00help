@@ -6,7 +6,7 @@
 
 {% block header %}
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'news/css/style_info_news1.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'news/css/style_info_news2.css' %}">
 {% endblock %}
 
 {% block content %} 
@@ -15,6 +15,14 @@
         <div class="user-info">
             <h2 class="info-heading">User Information</h2>
             <ul class="info-list">
+                <form action="{% url 'news:profile_edit' %}" method="get" class="comment-form">
+                    {% csrf_token %}
+                    <button type="submit" class="comment-button">Редактировать</button>
+                </form>
+                <form action="{% url 'news:password_change' %}" method="get" class="comment-form">
+                    {% csrf_token %}
+                    <button type="submit" class="comment-button">Изменить пароль</button>
+                </form>
                 <li class="info-item"><strong class="info-label">Name:</strong> {{ user.first_name }}</li>
                 <li class="info-item"><strong class="info-label">Surname:</strong> {{ user.last_name }}</li>
                 <li class="info-item"><strong class="info-label">Login:</strong> {{ user }}</li>

@@ -60,3 +60,22 @@ body {
     border: 2px solid #ccc; /* Add a subtle border */
     margin-top: 10px; /* Add some space below the list */
 }
+
+.comment-form {
+    margin-top: 20px;
+    display: flex;
+}
+
+.comment-button {
+    background-color: #16a085;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.comment-button:hover {
+    background-color: #138d75;
+}

@@ -133,7 +133,7 @@ INTERNAL_IPS = [
     '127.0.0.1'
 ]
 
-LOGIN_REDIRECT_URL = "/news/main_page"
+LOGIN_REDIRECT_URL = "/z00help/main_page"
 
 LOGOUT_REDIRECT_URL = "/login/"
 
