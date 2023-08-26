@@ -29,6 +29,7 @@ urlpatterns = [
     path("likes_animal/<int:animal_id>/<int:author_id>/", views.likes_animal, name="likes_animal"),
     path("profile/edit/", views.EditProfile.as_view(), name="profile_edit"),
     path("profile/change_password/", views.ChangePasswordOfUser.as_view(), name="password_change"),
-    path("animal/update/<int:animal_id>/", views.AnimalUpdateView.as_view(), name="animal_update")
+    path("animal/update/<int:animal_id>/", views.AnimalUpdateView.as_view(), name="animal_update"),
+    path("likes_if_take_animal_comment/<int:comment_id>/<int:author_id>/", views.likes_if_take_animal_comment, name="likes_if_take_animal_comment"),
     
 ]

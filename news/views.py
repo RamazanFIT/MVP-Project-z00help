@@ -7,7 +7,8 @@ from .models import (News, Comment, CustomUser,
                     TakeAnimalImage, LikesOfPost, 
                     OtclickOfPost, Message, 
                     AnimalImage, OwnAnimal, 
-                    CommentForOwnAnimal,LikesOfAnimal)
+                    CommentForOwnAnimal,LikesOfAnimal,
+                    LikesOfTakeAnimalComment)
 from .forms import NewsAddModelForm, SignUpForm, NewsChangeModelForm, AnimalAddForm, ProfileChangeModelForm, ChangePasswordForm, AnimalChangeModelForm
 from django.views import View
 from django.utils.decorators import method_decorator
@@ -35,6 +36,29 @@ def get_info_about_new(request, news_id : int):
         comment = Comment(content=content, news_id=news, author_of_comment=user)
         comment.save()
         return redirect(reverse("news:info_news", kwargs={"news_id" : news_id}))
+
+def likes_if_take_animal_comment(request, comment_id : int, author_id : int):
+   
+    if request.method == "POST":
+        comment = Comment.objects.get(pk=comment_id)
+        user = CustomUser.objects.get(pk=author_id)
+        like, created = LikesOfTakeAnimalComment.objects.get_or_create(author=user, comment=comment)
+        if  created:
+            comment.likes += 1
+            like.bolean = True
+            comment.save()
+            like.save()
+        elif like.bolean:
+            comment.likes -= 1
+            like.bolean = False
+            comment.save()
+            like.save()
+        else:
+            comment.likes += 1
+            like.bolean = True
+            comment.save()
+            like.save()
+    return redirect(reverse("news:info_news", args=(comment.news_id.id, )))
 
 # @permission_required("news.add_news", login_url="/login")
 @login_required(login_url="/login/")
