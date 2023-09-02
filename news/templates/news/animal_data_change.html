@@ -7,17 +7,72 @@ Change Animal
 {% block header %}
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'news/css/style_for_change.css' %}">
+    <style>
+        body {
+            background-image: url('{% static "news/images/back_photo.jpg" %}');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            color: #333;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            background-image: url('{% static "news/images/change_form.avif" %}');
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .back-button {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 10px;
+            display: inline-block;
+            border: 1px solid #333;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        .back-button:hover {
+            background-color: #333;
+            color: #fff;
+        }
+        .change-news-form {
+            text-align: center;
+        }
+        .change-news-heading {
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-weight: bold; /* Делаем текст заголовка жирным */
+        }
+        .change-button {
+            background-color: #333;
+            color: #fff;
+            font-weight: bold;
+            font-size: 16px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .change-button:hover {
+            background-color: #555;
+        }
+    </style>
 {% endblock %}
 
 {% block content %} 
-    <div class="container" style="background-image: url('{% static "news/images/d.jpg" %}');">
+    <div class="container">
         <a class="back-button" href="{% url 'news:get_info_about_animal' animal_id %}">Back</a>
-        
         <form class="change-news-form" action="{% url 'news:animal_update' animal_id %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <h1 class="change-news-heading">Change Animal</h1>
             {{ form.as_p }}
-            
             <button class="change-button" type="submit">Change Animal</button>
         </form>
     </div>

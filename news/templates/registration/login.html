@@ -1,32 +1,79 @@
 {% extends "news/base.html" %}
 
-
 {% block title %} 
-
     Войти
-
 {% endblock %}
 
 {% block header %}
-
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'news/css/style_add_news.css' %}">
-    
+    <style>
+        /* Дополнительные стили для страницы входа */
+        .login-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .login-form {
+            text-align: center;
+        }
+
+        .login-form input[type="text"],
+        .login-form input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        .login-button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .login-button:hover {
+            background-color: #0056b3;
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .signup-link a {
+            color: #007bff;
+            text-decoration: none;
+        }
+    </style>
 {% endblock %}
 
 {% block content %} 
+    <div class="login-container">
+        <h2>Войти</h2>
+        <form class="login-form" action="/login/" method="post">
+            {% csrf_token %}
+            
+            {{ form }}
+            
+            <button type="submit" class="login-button">Войти</button>
+        </form>
         
-    <form action="/login/" method="post">
-        {% csrf_token %}
-
-        {{ form }}
-
-        <p><input type="submit" value="Login"></p>
-
-        <p>
-            <a class="back-button" href="{% url 'news:sign_up' %}">Создать аккаунт</a>
+        <p class="signup-link">
+            Нет аккаунта? <a href="{% url 'news:sign_up' %}">Создать аккаунт</a>
         </p>
-    </form>
-    
-
+    </div>
 {% endblock %}

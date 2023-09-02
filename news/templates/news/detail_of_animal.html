@@ -7,6 +7,27 @@
 {% block header %}
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'news/css/style_info.css' %}">
+    <style>
+        body {
+            background-image: url('{% static "news/images/back_photo.jpg" %}');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            color: #333;
+        }
+        .container {
+            background-image: url('{% static "news/images/b.jpg" %}');
+            width: 70%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 {% endblock %}
 
 {% block content %} 

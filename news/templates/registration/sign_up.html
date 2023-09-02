@@ -1,59 +1,137 @@
 {% extends "news/base.html" %}
 
-
 {% block title %} 
-
-    Войти
-
+    Регистрация
 {% endblock %}
 
 {% block header %}
-
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'news/css/style_add_news.css' %}">
-    
+    <style>
+        /* Дополнительные стили для страницы регистрации */
+        .registration-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .error-list {
+            list-style: none;
+            color: #f00;
+            padding: 0;
+        }
+
+        .registration-form {
+            text-align: center;
+        }
+
+        .form-field {
+            margin-bottom: 15px;
+        }
+
+        .form-field label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-field input[type="text"],
+        .form-field input[type="password"],
+        .form-field input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        .registration-button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .registration-button:hover {
+            background-color: #0056b3;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .login-link a {
+            color: #007bff;
+            text-decoration: none;
+        }
+    </style>
 {% endblock %}
 
 {% block content %} 
-    <ul>
-        {% for error in form.errors %}
-            <li>{{ error }}</li>
-        {% endfor %}
-    </ul>
-    
-    <form action="{% url 'news:sign_up' %}" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
+    <div class="registration-container">
+        <h2>Регистрация</h2>
+        <ul class="error-list">
+            {% for error in form.errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+        <form class="registration-form" action="{% url 'news:sign_up' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
 
-        <p>{{ form.username.label_tag }}</p>
-        <p>{{ form.username }}</p>
+            <div class="form-field">
+                <label for="{{ form.username.id_for_label }}">Имя пользователя</label>
+                {{ form.username }}
+            </div>
 
-        <p>{{ form.email.label_tag }}</p>
-        <p>{{ form.email }}</p>
+            <div class="form-field">
+                <label for="{{ form.email.id_for_label }}">Email</label>
+                {{ form.email }}
+            </div>
 
-        <p>{{ form.first_name.label_tag }}</p>
-        <p>{{ form.first_name }}</p>
+            <div class="form-field">
+                <label for="{{ form.first_name.id_for_label }}">Имя</label>
+                {{ form.first_name }}
+            </div>
 
-        <p>{{ form.last_name.label_tag }}</p>
-        <p>{{ form.last_name }}</p>
-        
-        <p>{{ form.phone.label_tag }}</p>
-        <p>{{ form.phone }}</p>
+            <div class="form-field">
+                <label for="{{ form.last_name.id_for_label }}">Фамилия</label>
+                {{ form.last_name }}
+            </div>
+            
+            <div class="form-field">
+                <label for="{{ form.phone.id_for_label }}">Телефон</label>
+                {{ form.phone }}
+            </div>
 
-        <p>{{ form.password1.label_tag }}</p>
-        <p>{{ form.password1 }}</p>
+            <div class="form-field">
+                <label for="{{ form.password1.id_for_label }}">Пароль</label>
+                {{ form.password1 }}
+            </div>
 
-        <p>{{ form.password2.label_tag }}</p>
-        <p>{{ form.password2 }}</p>
+            <div class="form-field">
+                <label for="{{ form.password2.id_for_label }}">Повторите пароль</label>
+                {{ form.password2 }}
+            </div>
 
-        <p>{{ form.image.label_tag }}</p>
-        <p>{{ form.image }}</p>
+            <div class="form-field">
+                <label for="{{ form.image.id_for_label }}">Аватар</label>
+                {{ form.image }}
+            </div>
 
-        <p><input type="submit" value="Создат аккаунт"></p>
+            <button type="submit" class="registration-button">Создать аккаунт</button>
+        </form>
 
-        <p>
-            <a class="back-button" href="/login">login</a>
+        <p class="login-link">
+            Уже есть аккаунт? <a href="/login">Войти</a>
         </p>
-    </form>
-    
-
+    </div>
 {% endblock %}

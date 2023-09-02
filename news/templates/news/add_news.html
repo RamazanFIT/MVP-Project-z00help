@@ -7,14 +7,35 @@
 {% block header %}
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'news/css/style_for_add_news.css' %}">
+    <style>
+        body {
+            background-image: url('{% static "news/images/back_photo.jpg" %}');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            color: #333;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            background-image: url('{% static "news/images/b.jpg" %}');
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+    </style>
 {% endblock %}
 
 {% block content %} 
-    <div class="container" style="background-image: url('{% static "news/images/c.jpg" %}');">
-        <a class="back-button" href="{% url 'news:main' %}">Back</a>
+    <div class="container" style="background-image: url('{% static "news/images/b.jpg" %}');">
+        <a class="back-button" href="{% url 'news:all_news' %}">Back</a>
         <form class="add-news-form" action="{% url 'news:interface_adding' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            <h1 class="add-news-heading">Add News</h1>
+            <h1 class="add-news-heading">Add Animal</h1>
             {{ news_add_form.as_p }}
             Добавить Изображения:
             <input type="file" name="images" multiple>

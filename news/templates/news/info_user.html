@@ -6,37 +6,84 @@
 
 {% block header %}
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'news/css/style_info_news2.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'news/css/style_info_news3.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            background-image: url('{% static "news/images/back_photo.jpg" %}');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            color: #333;
+        }
+        .info-container {
+            background-image: url('{% static "news/images/b.jpg" %}');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            padding: 20px;
+            text-align: center;
+        }
+        .back-link {
+            float: left; /* Перемещаем "Back" влево */
+        }
+        .change-of-data {
+            text-align: center; /* Центрируем "Change of Data" */
+        }
+        .user-avatar {
+            display: block;
+            margin: 0 auto; /* Размещаем изображение по горизонтали по центру */
+        }
+        .body {
+            margin-left: 20px;
+        }
+    </style>
 {% endblock %}
 
 {% block content %} 
     <div class="info-container">
-        <a href="{% url 'news:main' %}" class="back-link">&larr; Back</a>
+        <a href="{% url 'news:main' %}" class="back-link">
+            <i class="fas fa-arrow-left"></i> Back
+        </a>
         <div class="user-info">
-            <h2 class="info-heading">User Information</h2>
-            <ul class="info-list">
-                <li class="info-item"><strong class="info-label">Name:</strong> {{ user.first_name }}</li>
-                <li class="info-item"><strong class="info-label">Surname:</strong> {{ user.last_name }}</li>
-                <li class="info-item"><strong class="info-label">Login:</strong> {{ user }}</li>
-                <li class="info-item"><strong class="info-label">Email:</strong> {{ user.email }}</li>
-                <li class="info-item"><strong class="info-label">Phone:</strong> {{ user.phone }}</li>
-                <li class="info-item">
+            
+            
+     
+            <div class="user-details">
+                <h2 class="info-heading">User Information</h2>
+                <ul class="info-list">
+                    <li class="info-item"><strong class="info-label">Name:</strong> {{ user.first_name }}</li>
+                    <li class="info-item"><strong class="info-label">Surname:</strong> {{ user.last_name }}</li>
+                    <li class="info-item"><strong class="info-label">Login:</strong> {{ user }}</li>
+                    <li class="info-item"><strong class="info-label">Email:</strong> {{ user.email }}</li>
+                    <li class="info-item"><strong class="info-label">Phone:</strong> {{ user.phone }}</li>
                     <img src="{% static user.image.name %}" alt="image_of_user" class="user-image">
-                </li>
+                </ul>
+            </div>
+            
+      
+                
+           
+            
+            <div class="change-of-data">
                 <form action="{% url 'news:profile_edit' %}" method="get" class="comment-form">
                     {% csrf_token %}
                     <button type="submit" class="comment-button edit-button">
-                        <i class="fas fa-user-edit"></i> Редактировать
+                        <i class="fas fa-user-edit"></i> Edit Profile
                     </button>
                 </form>
                 <form action="{% url 'news:password_change' %}" method="get" class="comment-form">
                     {% csrf_token %}
                     <button type="submit" class="comment-button change-pass-button">
-                        <i class="fas fa-key"></i> Изменить пароль
+                        <i class="fas fa-key"></i> Change Password
                     </button>
                 </form>
-            </ul>
+
+            </div>
+           
         </div>
     </div>
 {% endblock %}

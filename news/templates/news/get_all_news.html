@@ -6,7 +6,85 @@
 
 {% block header %}
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'news/css/styl.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'news/css/styleyy.css' %}">
+    <style>
+        body {
+            background-image: url('{% static "news/images/back_photo.jpg" %}');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            color: #333;
+        }
+        .container {
+            background-image: url('{% static "news/images/b.jpg" %}');
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .back-link {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 10px;
+            display: inline-block;
+            border: 1px solid #333;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        .back-link:hover {
+            background-color: #333;
+            color: #fff;
+        }
+        .news-list-heading {
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .news-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .news-item {
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+        }
+        .news-content {
+            margin-top: 10px;
+        }
+        .news-link {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+        .news-link:hover {
+            color: #ff5733;
+        }
+        .user-image {
+            max-width: 100px; /* Установите желаемую максимальную ширину изображения */
+            height: auto;
+        }
+        .delete-link {
+            text-decoration: none;
+            color: #ff5733; /* Цвет для ссылки "Delete" */
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        .delete-link:hover {
+            text-decoration: underline; /* Подчеркиваем ссылку при наведении */
+        }
+    </style>
 {% endblock %}
 
 {% block content %} 
@@ -15,9 +93,8 @@
         <a href="{% url 'news:interface_adding' %}" class="back-link">Add Animal to take</a>
         <h1 class="news-list-heading">Список всех животных, которые можно приютить ;)</h1>
         <ul class="news-list">
-            
             {% for new in news %}
-            <li class="news-item">
+          
                 <li class="info-item">
                     <img src="{% static new.main_image.name %}" alt="image_of_post" class="user-image">
                 </li>
@@ -28,8 +105,10 @@
                     {% if new.author_of_news == user or perms.news.delete_news %}
                         <a href="{% url 'news:delete_news' new.id new.author_of_news.pk %}" class="delete-link">Delete</a>
                     {% endif %}
+                    
                 </div>
-            </li>
+                <br><br>
+          
             {% endfor %}
         </ul>
     </div>

@@ -7,10 +7,67 @@
 {% block header %}
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'news/css/style_for_add_news.css' %}">
+    <style>
+        body {
+            background-image: url('{% static "news/images/back_photo.jpg" %}');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            color: #333;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            background-image: url('{% static "news/images/b.jpg" %}');
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .back-button {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 10px;
+            display: inline-block;
+            border: 1px solid #333;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        .back-button:hover {
+            background-color: #333;
+            color: #fff;
+        }
+        .add-news-form {
+            text-align: center;
+        }
+        .add-news-heading {
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-weight: bold; /* Делаем текст заголовка жирным */
+        }
+        .add-button {
+            background-color: #333;
+            color: #fff;
+            font-weight: bold;
+            font-size: 16px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .add-button:hover {
+            background-color: #555;
+        }
+    </style>
 {% endblock %}
 
 {% block content %} 
-    <div class="container" style="background-image: url('{% static "news/images/c.jpg" %}');">
+    <div class="container">
         <a class="back-button" href="{% url 'news:animals_of_user' user_id %}">Back</a>
         <form class="add-news-form" action="{% url 'news:add_animal' user_id %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
@@ -18,7 +75,6 @@
             {{ animal_add_form.as_p }}
             Добавить Изображения:
             <input type="file" name="images" multiple>
-
             <button class="add-button" type="submit">Add Animal</button>
         </form>
     </div>

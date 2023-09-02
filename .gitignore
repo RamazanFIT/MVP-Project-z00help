@@ -1,0 +1,10 @@
+*.lock
+
+*.sqlite3
+
+__pycache__/
+
+migrations/
+
+animals_images/
+

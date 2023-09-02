@@ -7,6 +7,27 @@
 {% block header %}
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'news/css/style_info.css' %}">
+    <style>
+        body {
+            background-image: url('{% static "news/images/back_photo.jpg" %}');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            color: #333;
+        }
+        .container {
+            background-image: url('{% static "news/images/b.jpg" %}');
+            width: 70%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 {% endblock %}
 
 {% block content %} 
@@ -14,11 +35,13 @@
         <a href="{% url 'news:all_news' %}" class="back-link">← Back</a>
         
         {% if news.author_of_news == user or perms.news.change_news %}
-            <a href="{% url 'news:change_data_of_news' news.id %}" class="back-link">Edit News</a>
+            <a href="{% url 'news:change_data_of_news' news.id %}" class="back-link">Edit Data</a>
         {% endif %}
-        <h1 class="info-heading">Information about News</h1>
+        <h1 class="info-heading">Information about Animal</h1>
         <div class="info-content">
+            
             <div class="info-section">
+                
                 <h2 class="info-subheading">Author</h2>
                 <p class="info-text">{{ news.author_of_news }}</p>
                 <li class="info-item">
@@ -30,6 +53,7 @@
                 </form>
             </div>
             <div class="info-section">
+                
                 <h2 class="info-subheading">Title</h2>
                 <p class="info-text">{{ news.title }}</p>
                 <h2 class="info-subheading">Likes</h2>
